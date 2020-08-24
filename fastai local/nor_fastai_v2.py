@@ -59,28 +59,29 @@ def load_learner(path, datafile, model):
             print("\n".join(learn.predict(sentence, N_WORDS, temperature=0.75) for _ in range(N_SENTENCES)))
         except KeyError:
             print ('error')
-def run():
+def run(datafile,model):
     path = "data"
-    if pth.exists('data/data_nor_lm_v3.pkl'):
+    if pth.exists('data/' + datafile):
         print ('Found datafile')
-        if pth.exists('data/models/fine_tuned_nor_v3.pth'):
+        if pth.exists('data/models/' + model + '.pth'):
             print ('Loading model')
-            load_learner(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3')
+            load_learner(path=path, datafile=datafile, model=model)
 
         else:
             print ('Training')
-            training(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3',
+            training(path=path, datafile=datafile, model=model,
                     pth_file='norwegian_enc', pkl_file='norwegian_itos')
 
     else:
         print ('Creating datafile')
-        dataload(path, 'data_nor_lm_v3.pkl')
+        dataload(path, datafile)
         print ('Training')
-        training(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3',
+        training(path=path, datafile=datafile, model=model,
                 pth_file='norwegian_enc', pkl_file='norwegian_itos')
-        load_learner(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3')
+        load_learner(path=path, datafile=datafile, model=model)
 
 
 if __name__ == '__main__':
-
-    run()
+    datafile = 'data_nor_lm_v3.pkl'
+    model = 'fine_tuned_nor_v3'
+    run(datafile,model)
