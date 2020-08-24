@@ -1,5 +1,7 @@
 from fastai.text import *
 import pickle
+import os.path
+from os import path as pth
 
 def dataload(path, datafile):
     bs=12
@@ -57,11 +59,28 @@ def load_learner(path, datafile, model):
             print("\n".join(learn.predict(sentence, N_WORDS, temperature=0.75) for _ in range(N_SENTENCES)))
         except KeyError:
             print ('error')
+def run():
+    path = "data"
+    if pth.exists('data/data_nor_lm_v3.pkl'):
+        print ('Found datafile')
+        if pth.exists('data/models/fine_tuned_nor_v3.pth'):
+            print ('Loading model')
+            load_learner(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3')
+
+        else:
+            print ('Training')
+            training(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3',
+                    pth_file='norwegian_enc', pkl_file='norwegian_itos')
+
+    else:
+        print ('Creating datafile')
+        dataload(path, 'data_nor_lm_v3.pkl')
+        print ('Training')
+        training(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3',
+                pth_file='norwegian_enc', pkl_file='norwegian_itos')
+        load_learner(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3')
+
 
 if __name__ == '__main__':
 
-    path = "data"
-    #dataload(path, 'data_nor_lm_v3.pkl')
-    #training(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3',
-    #        pth_file='norwegian_enc', pkl_file='norwegian_itos')
-    load_learner(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3')
+    run()
