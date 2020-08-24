@@ -1,3 +1,3 @@
-models/
-data/data_nor_lm.pkl
-data/data_nor_lm_v3.pkl
+/models/
+/data/data_nor_lm.pkl
+/data/data_nor_lm_v3.pkl
