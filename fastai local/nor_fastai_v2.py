@@ -1,7 +1,7 @@
 from fastai.text import *
 import pickle
 
-def trainer(path, datafile):
+def dataload(path, datafile):
     bs=12
     itos = pickle.load( open( "data/models/norwegian_itos.pkl", "rb") )
     vocab = Vocab(itos)
@@ -61,7 +61,7 @@ def load_learner(path, datafile, model):
 if __name__ == '__main__':
 
     path = "data"
-    #trainer(path, 'data_nor_lm_v3.pkl')
+    #dataload(path, 'data_nor_lm_v3.pkl')
     #training(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3',
     #        pth_file='norwegian_enc', pkl_file='norwegian_itos')
     load_learner(path=path, datafile='data_nor_lm_v3.pkl', model='fine_tuned_nor_v3')
