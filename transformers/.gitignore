@@ -1,9 +1,9 @@
 new_language/
-norwegian_bert_uncased/
-outputs/
+norwegian_bert_uncased_local/
+output_norwegian_local/
 data/
 logs/
 junk/
 example/
-swedish_bert_uncased/
-output_swedish/
+swedish_bert_uncased_local/
+output_swedish_local/
