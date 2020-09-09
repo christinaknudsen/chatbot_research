@@ -1,0 +1,9 @@
+new_language/
+norwegian_bert_uncased/
+outputs/
+data/
+logs/
+junk/
+example/
+swedish_bert_uncased/
+output_swedish/
