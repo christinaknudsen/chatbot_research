@@ -7,3 +7,5 @@ junk/
 example/
 swedish_bert_uncased_local/
 output_swedish_local/
+danish_bert_uncased_local/
+output_danish_local/

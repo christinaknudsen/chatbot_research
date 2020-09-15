@@ -46,26 +46,31 @@ def convert_tf_checkpoint_to_pytorch(tf_checkpoint_path, bert_config_file, pytor
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    #tf_check="./norwegian_bert_uncased/bert_model.ckpt"
-    #conf_file = "./norwegian_bert_uncased/bert_config.json"
-    #output = "./outputs/pytorch_model.bin"
-    tf_check="./swedish_bert_uncased/bert_model.ckpt"
-    conf_file = "./swedish_bert_uncased/bert_config.json"
-    output = "./output_swedish/pytorch_model.bin"
-    # Required parameters
+    language = 'danish'
+
     parser.add_argument(
-        "--tf_checkpoint_path", default=tf_check, type=str, required=False, help="Path to the TensorFlow checkpoint path."
+        "--tf_checkpoint_path",
+        default="./"+language+"_bert_uncased_local/bert_model.ckpt",
+        type=str,
+        required=False,
+        help="Path to the TensorFlow checkpoint path."
     )
     parser.add_argument(
         "--bert_config_file",
-        default=conf_file,
+        default="./"+language+"_bert_uncased_local/bert_config.json",
         type=str,
         required=False,
         help="The config json file corresponding to the pre-trained BERT model. \n"
         "This specifies the model architecture.",
     )
     parser.add_argument(
-        "--pytorch_dump_path", default=output, type=str, required=False, help="Path to the output PyTorch model."
+        "--pytorch_dump_path",
+        default="./output_"+language+"_local/pytorch_model.bin",
+        type=str,
+        required=False,
+        help="Path to the output PyTorch model."
     )
     args = parser.parse_args()
-    convert_tf_checkpoint_to_pytorch(args.tf_checkpoint_path, args.bert_config_file, args.pytorch_dump_path)
+    convert_tf_checkpoint_to_pytorch(args.tf_checkpoint_path,
+                                    args.bert_config_file,
+                                    args.pytorch_dump_path)

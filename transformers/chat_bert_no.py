@@ -2,43 +2,41 @@
 from transformers import BertTokenizer, BertConfig, BertLMHeadModel
 import tensorflow as tf
 
-def fix_vocab(vocab_file):
-    new_vocab = open('./norwegian_bert_uncased/new_vocab.txt', 'w', encoding="utf8")
+def fix_vocab(vocab_file, output_file):
+    new_vocab = open(output_file, 'w', encoding="utf8")
     vocab = open(vocab_file, 'r', encoding="utf8")
-    for line in vocab:
-        new_line = line.strip('##')
-        new_line = new_line.strip('▁')
-        new_vocab.write(new_line)
+    for word in vocab:
+        word = word.replace("##","")
+        word = word.replace("▁","##")
+        new_vocab.write(word)
+    print ('Done')
     new_vocab.close()
     vocab.close()
-#fix_vocab("./norwegian_bert_uncased/vocab.txt")
 
-folder_bert = "./output_swedish"
-tokenizer = BertTokenizer(vocab_file = folder_bert+"/vocab.txt")
-tokens = tokenizer.basic_tokenizer.tokenize("jag tror det skal regne")
-print(tokens)
-ids = tokenizer.convert_tokens_to_ids(tokens)
-print(ids)
-print("Vocab size:", len(tokenizer.vocab))
-
-
-config = BertConfig.from_json_file(folder_bert + "/config.json")
-model = BertLMHeadModel.from_pretrained(folder_bert, config=config)
 '''
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
 config = BertConfig('bert-base-cased')
 model = BertLMHeadModel.from_pretrained('bert-base-cased')
 '''
-tf.random.set_seed(1)
 
-def chat():
+def chat(folder_bert, voc, testing = False):
+    tf.random.set_seed(1)
+    tokenizer = BertTokenizer(vocab_file = folder_bert+voc)
+    if testing:
+        tokens = tokenizer.tokenize("jeg tror det skal regne")
+        print(tokens)
+        ids = tokenizer.convert_tokens_to_ids(tokens)
+        print(ids)
+        print("Vocab size:", len(tokenizer.vocab))
+
+    config = BertConfig.from_json_file(folder_bert + "/config.json")
+    model = BertLMHeadModel.from_pretrained(folder_bert, config=config)
     while (1):
         text = input(">>User: ")
         if text == 'quit':
             break
         input_ids = tokenizer.encode(text+tokenizer.sep_token, return_tensors='pt')
-        print ('input_ids', input_ids)
-
+        #print ('input_ids', input_ids)
         sample_output = model.generate(
             input_ids,
             pad_token_id = tokenizer.sep_token_id,
@@ -51,6 +49,11 @@ def chat():
         )
         print("Bot: {}".format(tokenizer.decode(sample_output[0])))
         print("Bot: {}".format(tokenizer.decode(sample_output[:,input_ids.shape[-1]:][0], skip_special_tokens=True)))
+
 if __name__ == "__main__":
-    chat()
+    #fix_vocab("./norwegian_bert_uncased_local/vocab.txt", "./output_norwegian_local/new_vocab.txt")
+    language = 'norwegian'
+    folder_bert = "./output_"+language+"_local"
+    voc = "/new_vocab.txt"
+    chat(folder_bert, voc, testing=True)
     print ('yey')
