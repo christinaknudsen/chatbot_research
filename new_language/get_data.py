@@ -1,3 +1,5 @@
+#Code from https://towardsdatascience.com/make-your-own-rick-sanchez-bot-with-transformers-and-dialogpt-fine-tuning-f85e6d1f4e30
+
 
 from transformers import AutoModelWithLMHead, AutoTokenizer
 import torch
