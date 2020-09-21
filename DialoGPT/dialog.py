@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from transformers import GPT2LMHeadModel,GPT2Tokenizer
+from transformers import GPT2LMHeadModel,GPT2Tokenizer, AutoConfig, AutoTokenizer, AutoModelWithLMHead
 import torch
 
 
 def chatbot(md,tk,model_name):
     tokenizer = tk.from_pretrained(model_name)
-    model = md.from_pretrained(model_name)
+    model = md#.from_pretrained(model_name)
     model.to('cpu')
     while (1):
         step = 0
@@ -26,5 +26,12 @@ def chatbot(md,tk,model_name):
 
 if __name__ == '__main__':
     tk = GPT2Tokenizer
-    md = GPT2LMHeadModel
-    chatbot(md,tk,"microsoft/DialoGPT-large")
+    #md = GPT2LMHeadModel
+
+
+    config = AutoConfig.from_pretrained("output/checkpoint-5000/"+ "/config.json")
+    #tk = AutoTokenizer.from_pretrained("output/checkpoint-5000", cache_dir="data")
+    md = AutoModelWithLMHead.from_pretrained("output/checkpoint-5000/pytorch_model.bin", config=config)
+
+
+    chatbot(md,tk,"microsoft/DialoGPT-small")

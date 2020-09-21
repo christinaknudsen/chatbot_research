@@ -1,4 +1,4 @@
-'''
+
 from transformers import AutoModelWithLMHead, AutoTokenizer
 import torch
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
@@ -58,13 +58,13 @@ class Args():
         self.config_name = 'microsoft/DialoGPT-small'
         self.tokenizer_name = 'microsoft/DialoGPT-small'
         self.cache_dir = 'cached'
-        self.block_size = 512
+        self.block_size = 50#512
         self.do_train = True
         self.do_eval = True
         self.evaluate_during_training = False
-        self.per_gpu_train_batch_size = 4
-        self.per_gpu_eval_batch_size = 4
-        self.gradient_accumulation_steps = 1
+        self.per_gpu_train_batch_size = 2#4
+        self.per_gpu_eval_batch_size = 2#4
+        self.gradient_accumulation_steps = 12#1
         self.learning_rate = 5e-5
         self.weight_decay = 0.0
         self.adam_epsilon = 1e-8
@@ -87,10 +87,9 @@ class Args():
 
 args = Args()
 
-'''
-import pandas as pd
 
-all_lines = pd.read_csv('no_train.txt', delimiter = "\n")
+
+all_lines = pd.read_csv('no_train.txt', delimiter = "\n", header = None, names = ['lines'])
 
 contexted = []
 n = 7
@@ -103,10 +102,12 @@ for i in range(n, len(all_lines['lines'])):
 columns = ['response', 'context']
 columns = columns + ['context/'+str(i) for i in range(n-1)]
 df = pd.DataFrame.from_records(contexted, columns=columns)
-#trn_df, val_df = train_test_split(df, test_size = 0.1)
-
+print (df.head(5))
 df.to_csv('final.csv', encoding = 'utf-8')
-'''
+
+trn_df, val_df = train_test_split(df, test_size = 0.1)
+
+
 def construct_conv(row, tokenizer, eos = True):
     flatten = lambda l: [item for sublist in l for item in sublist]
     conv = list(reversed([tokenizer.encode(x) + [tokenizer.eos_token_id] for x in row]))
@@ -549,7 +550,7 @@ def main(df_trn, df_val):
             results.update(result)
 
     return results
-'''
+
 if __name__ == '__main__':
     print ('hey')
-    #main(trn_df, val_df)
+    main(trn_df, val_df)
