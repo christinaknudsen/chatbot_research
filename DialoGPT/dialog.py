@@ -7,8 +7,11 @@ import torch
 def chatbot(md,tk,model_name):
     tokenizer = tk.from_pretrained(model_name)
     model = md#.from_pretrained(model_name)
-    model.to('cpu')
+    '''device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+    print('Device is', device)'''
     while (1):
+
         step = 0
         text = input(">>User: ")
         if text == 'quit':
@@ -20,7 +23,8 @@ def chatbot(md,tk,model_name):
                                         max_length = 1000,
                                         pad_token_id = tokenizer.eos_token_id,
                                         top_p=0.92,
-                                        top_k = 50)
+                                        top_k = 50
+                                        )
         print(model_name + ": {}".format(tokenizer.decode(chat_history_ids[:,bot_input_ids.shape[-1]:][0],skip_special_tokens=True)))
         step+=1
 
@@ -28,10 +32,11 @@ if __name__ == '__main__':
     tk = GPT2Tokenizer
     #md = GPT2LMHeadModel
 
-
-    config = AutoConfig.from_pretrained("output/checkpoint-5000/"+ "/config.json")
+    tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-small')
+    md = AutoModelWithLMHead.from_pretrained('outputs2')
+    #config = AutoConfig.from_pretrained("output/checkpoint-5000/"+ "/config.json")
     #tk = AutoTokenizer.from_pretrained("output/checkpoint-5000", cache_dir="data")
-    md = AutoModelWithLMHead.from_pretrained("output/checkpoint-5000/pytorch_model.bin", config=config)
+    #md = AutoModelWithLMHead.from_pretrained("output/checkpoint-5000/pytorch_model.bin", config=config)
 
 
     chatbot(md,tk,"microsoft/DialoGPT-small")

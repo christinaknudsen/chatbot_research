@@ -1,0 +1,5 @@
+outputs/
+runs/
+data/
+cached/
+__pycache__/

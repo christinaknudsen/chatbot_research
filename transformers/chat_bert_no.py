@@ -9,7 +9,6 @@ def fix_vocab(vocab_file, output_file):
         word = word.replace("##","")
         word = word.replace("▁","##")
         new_vocab.write(word)
-    print ('Done')
     new_vocab.close()
     vocab.close()
 
