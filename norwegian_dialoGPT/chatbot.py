@@ -66,12 +66,12 @@ def main_func(df_trn, df_val):
         )
 
     # Setup CUDA, GPU & distributed training
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda") #if torch.cuda.is_available() else "cpu")
     print('Device is', device)
-    if torch.cuda.is_available():
-        args.n_gpu = torch.cuda.device_count()
-    else:
-        args.n_gpu = torch.get_num_threads()
+    #if torch.cuda.is_available():
+    args.n_gpu = torch.cuda.device_count()
+    #else:
+    #    args.n_gpu = torch.get_num_threads()
     args.device = device
 
     # Setup logging
