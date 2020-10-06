@@ -3,3 +3,11 @@ runs/
 data/
 cached/
 __pycache__/
+final_corpus.csv
+final_corpus_old.csv
+final_corpus_large.csv
+kort_versjon.csv
+final_corpus.csv
+corpus*
+old_corpus/
+short_file.csv

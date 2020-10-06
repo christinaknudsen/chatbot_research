@@ -32,8 +32,8 @@ if __name__ == '__main__':
     tk = GPT2Tokenizer
     #md = GPT2LMHeadModel
 
-    tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-small')
-    md = AutoModelWithLMHead.from_pretrained('outputs2')
+    tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-large')
+    md = AutoModelWithLMHead.from_pretrained('microsoft/DialoGPT-large')
     #config = AutoConfig.from_pretrained("output/checkpoint-5000/"+ "/config.json")
     #tk = AutoTokenizer.from_pretrained("output/checkpoint-5000", cache_dir="data")
     #md = AutoModelWithLMHead.from_pretrained("output/checkpoint-5000/pytorch_model.bin", config=config)

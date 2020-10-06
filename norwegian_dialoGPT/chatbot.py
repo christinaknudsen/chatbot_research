@@ -42,7 +42,8 @@ MODEL_TYPES = tuple(conf.model_type for conf in MODEL_CONFIG_CLASSES)
 # Load data
 trn_df, val_df = createCorpus()
 print('Length of training and validation set: ',len(trn_df), len(val_df))
-
+print ('training data:')
+print (trn_df.head(5))
 
 def main_func(df_trn, df_val):
     if args.should_continue:
