@@ -1,4 +1,5 @@
 from transformers import AutoTokenizer, AutoModelWithLMHead
+import torch
 
 def chatbot(model,tokenizer):
     step = 0
@@ -20,5 +21,5 @@ def chatbot(model,tokenizer):
 
 if __name__ == '__main__':
     tk = AutoTokenizer.from_pretrained('microsoft/DialoGPT-small')
-    md = AutoModelWithLMHead.from_pretrained('output')
+    md = AutoModelWithLMHead.from_pretrained('outputs/NorskDialoGPT')
     chatbot(md,tk)

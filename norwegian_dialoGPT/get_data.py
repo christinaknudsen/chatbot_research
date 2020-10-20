@@ -37,7 +37,7 @@ def createCorpus(chat = True):
         columns = ['response', 'context']
         columns = columns + ['context/'+str(i) for i in range(args.n-1)]
         df = pd.DataFrame.from_records(all_contexted, columns=columns)
-        df.to_csv('short_file.csv', encoding = 'utf-8')
+        df.to_csv(args.corpus_name, encoding = 'utf-8')
 
     df = df.dropna()
     df = df.drop(df.columns[0], axis=1)

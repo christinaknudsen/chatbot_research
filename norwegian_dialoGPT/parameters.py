@@ -35,5 +35,5 @@ class Args():
 
         self.load_corpus = True
         self.corpus_name = "final_corpus.csv"
-        self.filmtekst_path = 'data'
+        self.filmtekst_path = 'new_data'
         self.n = 7

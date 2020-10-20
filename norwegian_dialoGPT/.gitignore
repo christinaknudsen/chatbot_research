@@ -11,3 +11,5 @@ final_corpus.csv
 corpus*
 old_corpus/
 short_file.csv
+new_data/
+final_corpus_NEW.csv
